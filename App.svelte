@@ -1,11 +1,6 @@
 <script>
   import Journey from "./Journey.svelte";
-  import {
-    mdiHistory,
-    mdiArrowRightCircleOutline,
-    mdiArrowLeftCircleOutline
-  } from "@mdi/js";
-  import Mdicon from "mdi-svelte";
+  import Navbar from "./Navbar.svelte";
 
   let journeys = [];
 
@@ -60,41 +55,10 @@
     href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" />
 </svelte:head>
 
+<Navbar {getJourneys} {journeys} />
+
 <main>
   <div class="container">
-    <div class="row">
-      <div class="col">
-        <h1
-          on:click={e => {
-            getJourneys();
-          }}>
-          🥖 Radar
-        </h1>
-        <div class="btn-group">
-          <div
-            class="btn btn-primary"
-            on:click={e => {
-              getJourneys(journeys[0].links[1].href, 0, true);
-            }}>
-            <Mdicon path={mdiArrowLeftCircleOutline} />
-          </div>
-          <div
-            class="btn btn-primary"
-            on:click={e => {
-              getJourneys();
-            }}>
-            <Mdicon path={mdiHistory} />
-          </div>
-          <div
-            class="btn btn-primary"
-            on:click={e => {
-              getJourneys(journeys[journeys.length - 1].links[0].href, 0);
-            }}>
-            <Mdicon path={mdiArrowRightCircleOutline} />
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="row">
       {#if journeys.length}
         {#each journeys as journey}
