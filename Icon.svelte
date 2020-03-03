@@ -31,4 +31,4 @@
   }
 </script>
 
-<Mdicon {path}/>
+<Mdicon {path} />
