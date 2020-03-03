@@ -9,8 +9,8 @@
   let journeys = [];
 
   async function getJourneys(
-    n = 0,
-    url = "https://api.navitia.io/v1/journeys?from=4.9524123%3B52.0444895&to=4.6615428%3B52.1177023"
+    url = "https://api.navitia.io/v1/journeys?from=4.9524123%3B52.0444895&to=4.6615428%3B52.1177023",
+    n = 0
   ) {
     const res = await fetch(url, {
       headers: {
@@ -22,8 +22,8 @@
     if (res.ok) {
       journeys = [...journeys, currentJourney];
 
-      if (n < 4) {
-        let next = getJourneys(n + 1, currentJourney.links[0].href);
+      if (n < 9) {
+        let next = getJourneys(currentJourney.links[0].href, n + 1);
       }
     }
   }
