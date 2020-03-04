@@ -14,3 +14,24 @@ self.addEventListener("install", function(e) {
     })
   );
 });
+self.addEventListener("activate", e => {
+  e.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(thisCacheName) {
+          if (thisCacheName !== cacheName) {
+            return caches.delete(thisCacheName);
+          }
+        })
+      );
+    })
+  );
+});
+self.addEventListener("fetch", e => {
+  e.respondWith(
+    (async function() {
+      const response = await caches.match(e.request);
+      return response || fetch(e.request);
+    })()
+  );
+});

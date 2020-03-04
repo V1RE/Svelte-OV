@@ -21,6 +21,7 @@
 
   .card-title {
     position: relative;
+    padding-right: 1.5rem;
   }
 
   .cardtitles {
