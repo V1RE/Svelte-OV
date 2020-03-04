@@ -3,12 +3,13 @@
   import Navbar from "./Navbar.svelte";
 
   let journeys = [];
+  let nikitaUrl =
+    "https://api.navitia.io/v1/journeys?from=4.6615428%3B52.1177023&to=4.9524123%3B52.0444895";
+  let nielsUrl =
+    "https://api.navitia.io/v1/journeys?from=4.9524123%3B52.0444895&to=4.6615428%3B52.1177023";
+  let curUrl = nikitaUrl;
 
-  async function getJourneys(
-    url = "https://api.navitia.io/v1/journeys?from=4.9524123%3B52.0444895&to=4.6615428%3B52.1177023",
-    n = 0,
-    prev = false
-  ) {
+  async function getJourneys(url = curUrl, n = 0, prev = false) {
     if (!n) {
       journeys = [];
     }
@@ -56,6 +57,19 @@
 </svelte:head>
 
 <Navbar {getJourneys} {journeys} />
+
+<div
+  class="btn btn-secondary"
+  on:click={e => {
+    if (curUrl == nikitaUrl) {
+      curUrl = nielsUrl;
+    } else {
+      curUrl = nikitaUrl;
+    }
+    getJourneys();
+  }}>
+  Switch
+</div>
 
 <main>
   <div class="container">

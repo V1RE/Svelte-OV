@@ -72,7 +72,8 @@
     </div>
     <div class="content">
       <span class="line1">
-        {#if from}{from.name}{/if}
+        {moment(section.departure_date_time).format('HH:mm')}
+        {#if from}- {from.name}{/if}
       </span>
       <span class="line2">
         {#if section.duration}
@@ -80,7 +81,8 @@
         {/if}
       </span>
       <span class="line3">
-        {#if to}{to.name}{/if}
+        {moment(section.arrival_date_time).format('HH:mm')}
+        {#if to}- {to.name}{/if}
       </span>
     </div>
     {#if url}
