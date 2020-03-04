@@ -9,6 +9,10 @@
     "https://api.navitia.io/v1/journeys?from=4.9524123%3B52.0444895&to=4.6615428%3B52.1177023";
   let curUrl = nikitaUrl;
 
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js");
+  }
+
   async function getJourneys(url = curUrl, n = 0, prev = false) {
     if (!n) {
       journeys = [];
