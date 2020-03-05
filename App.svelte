@@ -1,44 +1,48 @@
 <script>
   import Journey from "./Journey.svelte";
   import Navbar from "./Navbar.svelte";
+  import { from, to, query, url } from "./stores.js";
 
   let journeys = [];
-  let nikitaUrl =
-    "https://api.navitia.io/v1/journeys?from=4.6615428%3B52.1177023&to=4.9524123%3B52.0444895";
-  let nielsUrl =
-    "https://api.navitia.io/v1/journeys?from=4.9524123%3B52.0444895&to=4.6615428%3B52.1177023";
-  let curUrl = nikitaUrl;
+  let curId;
+  let firstRun = true;
 
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/service-worker.js");
-  }
-
-  async function getJourneys(url = curUrl, n = 0, prev = false) {
+  async function getJourneys(
+    getUrl = $url,
+    n = 0,
+    prev = false,
+    id = Date.now()
+  ) {
     if (!n) {
       journeys = [];
+      curId = id;
     }
 
-    const res = await fetch(url, {
+    const res = await fetch(getUrl, {
       headers: {
         Authorization: "bee578e7-45b6-44f4-b317-fd0aad5ae32f"
       }
     });
     const currentJourney = await res.json();
 
-    if (res.ok) {
+    if (res.ok && id == curId) {
       let nextUrl = currentJourney.links[0].href;
 
       if (prev) {
-        journeys = [currentJourney, ...journeys].slice(0, 10);
+        journeys = [currentJourney, ...journeys];
         nextUrl = currentJourney.links[1].href;
       } else {
-        journeys = [...journeys, currentJourney].slice(0, 10);
+        journeys = [...journeys, currentJourney];
       }
 
       if (n < 9) {
-        getJourneys(nextUrl, n + 1, prev);
+        getJourneys(nextUrl, n + 1, prev, id);
       }
     }
+  }
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js");
   }
 
   getJourneys();
@@ -63,16 +67,12 @@
 <Navbar {getJourneys} {journeys} />
 
 <div
-  class="btn btn-secondary"
+  class="btn"
   on:click={e => {
-    if (curUrl == nikitaUrl) {
-      curUrl = nielsUrl;
-    } else {
-      curUrl = nikitaUrl;
-    }
+    to.set({ lon: '4.7615428', lat: '52.1377023' });
     getJourneys();
   }}>
-  Switch
+  testting
 </div>
 
 <main>
