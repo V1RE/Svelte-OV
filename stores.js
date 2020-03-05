@@ -27,3 +27,5 @@ export const query = derived([from, to], ([$from, $to]) => {
 export const url = derived(query, $query => {
   return encodeURI(baseUrl + $query);
 });
+
+export const journeys = writable([]);

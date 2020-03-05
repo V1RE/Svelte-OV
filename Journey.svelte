@@ -2,6 +2,7 @@
   import Section from "./Section.svelte";
   import moment from "moment";
   import Mdicon from "mdi-svelte";
+  import { fly } from "svelte/transition";
   import { mdiChevronRight, mdiMenuDown, mdiMenuUp } from "@mdi/js";
 
   export let journey;
@@ -35,7 +36,7 @@
   }
 </style>
 
-<div class="card col-12 mb-3" class:open>
+<div class="card col-12 mb-3" class:open in:fly={ x: 100 }>
   <div class="card-body">
     <div
       class="cardtitles"
