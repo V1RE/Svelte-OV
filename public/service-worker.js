@@ -1,9 +1,11 @@
-var cacheName = "sgtoilet-cache-" + Date.now();
+var cacheName = "radar-cache-" + Date.now();
 var filesToCache = [
   "/",
   "/index.html",
   "/bundle.js",
   "/bundle.css",
+  "/logo.svg",
+  "/images/icons/icon-192x192.png",
   "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css",
   "https://fonts.googleapis.com/css?family=Montserrat&display=swap"
 ];
