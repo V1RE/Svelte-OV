@@ -1,5 +1,4 @@
 import { writable, derived, readable, get } from "svelte/store";
-import { getJourneys } from "./functions.js";
 
 const baseUrl = "https://api.navitia.io/v1/journeys?";
 
@@ -29,7 +28,9 @@ export const url = derived(query, $query => {
   return encodeURI(baseUrl + $query);
 });
 
-export const journeys = writable(JSON.parse(localStorage.getItem("journeys")));
+export const journeys = writable(
+  JSON.parse(localStorage.getItem("journeys")) || []
+);
 
 export const online = readable(navigator.onLine, function start(set) {
   const handleNetworkChange = () => {
