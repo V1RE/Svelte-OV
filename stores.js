@@ -28,13 +28,13 @@ export const url = derived(query, $query => {
   return encodeURI(baseUrl + $query);
 });
 
-let journeys = [];
+let tmpJourneys = [];
 
 if (!navigator.onLine) {
-  journeys = JSON.parse(localStorage.getItem("journeys"));
+  tmpJourneys = JSON.parse(localStorage.getItem("journeys"));
 }
 
-export const journeys = writable(journeys);
+export const journeys = writable(tmpJourneys);
 
 journeys.subscribe(val =>
   localStorage.setItem("journeys", JSON.stringify(val))
