@@ -1,14 +1,17 @@
 <script>
   import Journey from "./Journey.svelte";
   import Navbar from "./Navbar.svelte";
-  import { from, to, journeys } from "./stores.js";
+  import { from, to, journeys, online } from "./stores.js";
   import { getJourneys } from "./functions.js";
+  import { onMount } from "svelte";
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/service-worker.js");
   }
 
-  getJourneys();
+  onMount(() => {
+    getJourneys();
+  });
 </script>
 
 <style>
@@ -37,6 +40,8 @@
   }}>
   testting
 </div>
+
+{#if $online}online{:else}offline{/if}
 
 <main>
   <div class="container">

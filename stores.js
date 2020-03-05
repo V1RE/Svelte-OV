@@ -1,4 +1,5 @@
-import { writable, derived } from "svelte/store";
+import { writable, derived, readable, get } from "svelte/store";
+import { getJourneys } from "./functions.js";
 
 const baseUrl = "https://api.navitia.io/v1/journeys?";
 
@@ -28,16 +29,25 @@ export const url = derived(query, $query => {
   return encodeURI(baseUrl + $query);
 });
 
-let tmpJourneys = () => {
-  if (!navigator.onLine) {
-    return JSON.parse(localStorage.getItem("journeys"));
-  } else {
-    return [];
+export const journeys = writable(JSON.parse(localStorage.getItem("journeys")));
+
+export const online = readable(navigator.onLine, function start(set) {
+  const handleNetworkChange = () => {
+    set(navigator.onLine);
+  };
+
+  window.addEventListener("online", handleNetworkChange);
+  window.addEventListener("offline", handleNetworkChange);
+
+  return function stop() {
+    window.removeEventListener("online", handleNetworkChange);
+    window.removeEventListener("offline", handleNetworkChange);
+  };
+});
+
+journeys.subscribe(val => {
+  console.log("updated journeys");
+  if (get(online)) {
+    localStorage.setItem("journeys", JSON.stringify(val));
   }
-};
-
-export const journeys = writable(tmpJourneys);
-
-journeys.subscribe(val =>
-  localStorage.setItem("journeys", JSON.stringify(val))
-);
+});
