@@ -1,4 +1,4 @@
-import { from, to, query, url, journeys } from "./stores.js";
+import { url, journeys } from "./stores.js";
 import { get } from "svelte/store";
 
 let curId;

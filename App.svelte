@@ -1,7 +1,7 @@
 <script>
   import Journey from "./Journey.svelte";
   import Navbar from "./Navbar.svelte";
-  import { from, to, query, url, journeys } from "./stores.js";
+  import { from, to, journeys } from "./stores.js";
   import { getJourneys } from "./functions.js";
 
   if ("serviceWorker" in navigator) {

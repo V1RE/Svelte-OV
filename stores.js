@@ -28,4 +28,14 @@ export const url = derived(query, $query => {
   return encodeURI(baseUrl + $query);
 });
 
-export const journeys = writable([]);
+let journeys = [];
+
+if (!navigator.onLine) {
+  journeys = JSON.parse(localStorage.getItem("journeys"));
+}
+
+export const journeys = writable(journeys);
+
+journeys.subscribe(val =>
+  localStorage.setItem("journeys", JSON.stringify(val))
+);
