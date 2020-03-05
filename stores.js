@@ -28,11 +28,13 @@ export const url = derived(query, $query => {
   return encodeURI(baseUrl + $query);
 });
 
-let tmpJourneys = [];
-
-if (!navigator.onLine) {
-  tmpJourneys = JSON.parse(localStorage.getItem("journeys"));
-}
+let tmpJourneys = () => {
+  if (!navigator.onLine) {
+    return JSON.parse(localStorage.getItem("journeys"));
+  } else {
+    return [];
+  }
+};
 
 export const journeys = writable(tmpJourneys);
 
