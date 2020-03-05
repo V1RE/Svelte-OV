@@ -3,7 +3,7 @@ import { get } from "svelte/store";
 
 let curId;
 
-async function getJourneys(
+export async function getJourneys(
   getUrl = get(url),
   n = 0,
   prev = false,
