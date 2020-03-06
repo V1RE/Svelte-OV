@@ -14,6 +14,12 @@
   .disabled {
     pointer-events: none;
   }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 15;
+  }
 </style>
 
 <nav class="navbar navbar-light bg-light">
