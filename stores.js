@@ -5,7 +5,8 @@ const baseUrl = "https://api.navitia.io/v1/journeys?";
 export const from = writable(
   JSON.parse(localStorage.getItem("from")) || {
     lon: "4.6615428",
-    lat: "52.1177023"
+    lat: "52.1177023",
+    name: "Alphen aan den Rijn"
   }
 );
 
@@ -14,7 +15,8 @@ from.subscribe(val => localStorage.setItem("from", JSON.stringify(val)));
 export const to = writable(
   JSON.parse(localStorage.getItem("to")) || {
     lon: "4.9524123",
-    lat: "52.0444895"
+    lat: "52.0444895",
+    name: "Montfoort"
   }
 );
 

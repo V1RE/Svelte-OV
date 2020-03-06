@@ -11,7 +11,6 @@ export async function getJourneys(
 ) {
   if (get(online)) {
     if (!n) {
-      console.log(get(online));
       journeys.set([]);
       curId = id;
     }
@@ -23,22 +22,25 @@ export async function getJourneys(
     });
     const currentJourney = await res.json();
 
-    if (res.ok && id == curId) {
-      let nextUrl = currentJourney.links[0].href;
+    if (id == curId) {
+      if (res.ok) {
+        let nextUrl = currentJourney.links[0].href;
 
-      if (prev) {
-        journeys.set([currentJourney, ...get(journeys)]);
-        nextUrl = currentJourney.links[1].href;
+        if (prev) {
+          journeys.set([currentJourney, ...get(journeys)]);
+          nextUrl = currentJourney.links[1].href;
+        } else {
+          journeys.set([...get(journeys), currentJourney]);
+        }
+
+        if (n < 9) {
+          getJourneys(nextUrl, n + 1, prev, id);
+        }
       } else {
-        journeys.set([...get(journeys), currentJourney]);
-      }
-
-      if (n < 9) {
-        getJourneys(nextUrl, n + 1, prev, id);
+        console.log(res);
       }
     }
   } else {
-    console.log("offline?");
-    journeys.set(JSON.parse(localStorage.getItem("journeys")));
+    journeys.set(JSON.parse(localStorage.getItem("journeys")) || []);
   }
 }

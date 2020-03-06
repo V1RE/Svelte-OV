@@ -1,18 +1,14 @@
 <script>
-  import Journey from "./Journey.svelte";
   import Navbar from "./Navbar.svelte";
   import Alert from "./Alert.svelte";
-  import { from, to, journeys, online } from "./stores.js";
+  import Journeys from "./Journeys.svelte";
   import { getJourneys } from "./functions.js";
-  import { onMount } from "svelte";
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/service-worker.js");
   }
 
-  onMount(() => {
-    getJourneys();
-  });
+  getJourneys();
 </script>
 
 <style>
@@ -31,12 +27,6 @@
 <main>
   <div class="container">
     <Alert />
-    {#if $journeys.length}
-      {#each $journeys as journey}
-        <Journey {journey} />
-      {/each}
-    {:else}
-      <h2>Duurt ff</h2>
-    {/if}
+    <Journeys />
   </div>
 </main>
