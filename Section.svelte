@@ -29,9 +29,7 @@
           "," +
           to.coord.lon
       );
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   if (type == "public_transport") {

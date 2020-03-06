@@ -1,25 +1,28 @@
 <script>
   import { online, journeys } from "./stores";
   import { getJourneys } from "./functions.js";
-  import { fly } from "svelte/transition";
+  import Alert from "./Alert.svelte";
 
   let showOffline = false;
+  let showOnline = false;
 
   online.subscribe(val => {
     if (val) {
+      showOnline = true;
       getJourneys();
+      setTimeout(() => {
+        showOnline = false;
+      }, 2000);
     }
 
     showOffline = !val;
   });
+
+  showOnline = false;
 </script>
 
 {#if showOffline && $journeys.length}
-  <div
-    class="alert alert-danger"
-    role="alert"
-    in:fly={{ x: -50, duration: 300 }}
-    out:fly={{ x: 50, duration: 300 }}>
+  <Alert>
     No internet connection available, using cached data...
     <button
       type="button"
@@ -30,15 +33,13 @@
       }}>
       <span aria-hidden="true">&times;</span>
     </button>
-  </div>
+  </Alert>
 {:else}
   {#if showOffline}
-    <div
-      class="alert alert-danger"
-      role="alert"
-      in:fly={{ x: -50, duration: 300 }}
-      out:fly={{ x: 50, duration: 300 }}>
-      No internet connection or cached data available...
-    </div>
+    <Alert>No internet connection or cached data available...</Alert>
   {/if}
+{/if}
+
+{#if showOnline}
+  <Alert color="success">Internet connection restored</Alert>
 {/if}
