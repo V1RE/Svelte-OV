@@ -1,6 +1,6 @@
 <script>
   import Navbar from "./Navbar.svelte";
-  import Alert from "./Alert.svelte";
+  import Alerts from "./Alerts.svelte";
   import Journeys from "./Journeys.svelte";
   import { getJourneys } from "./functions.js";
 
@@ -26,7 +26,7 @@
 
 <main>
   <div class="container">
-    <Alert />
+    <Alerts />
     <Journeys />
   </div>
 </main>
