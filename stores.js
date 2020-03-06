@@ -20,8 +20,8 @@ if (localStorage.getItem("to")) {
 if (urlParams.get("from")) {
   try {
     initFrom = {
-      lat: urlParams.get("from").split(";")[0],
-      lon: urlParams.get("from").split(";")[1]
+      lon: urlParams.get("from").split(";")[0],
+      lat: urlParams.get("from").split(";")[1]
     };
   } catch (error) {}
 }
@@ -29,8 +29,8 @@ if (urlParams.get("from")) {
 if (urlParams.get("to")) {
   try {
     initTo = {
-      lat: urlParams.get("to").split(";")[0],
-      lon: urlParams.get("to").split(";")[1]
+      lon: urlParams.get("to").split(";")[0],
+      lat: urlParams.get("to").split(";")[1]
     };
   } catch (error) {}
 }
