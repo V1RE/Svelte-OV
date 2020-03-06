@@ -94,7 +94,7 @@
     {/if}
   </div>
 {:else}
-  {#if type != 'waiting'}
+  {#if type != 'waiting' && type != 'transfer'}
     {#if i}
       <span class="text-black-50 chevron">
         <Mdicon path={mdiChevronRight} size="1rem" />
