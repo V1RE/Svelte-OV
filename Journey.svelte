@@ -36,7 +36,7 @@
   }
 </style>
 
-<div class="card col-12 mb-3" class:open>
+<div class="card col-12 mb-3" class:open in:fly={{ x: -50, duration: 300 }}>
   <div class="card-body">
     <div
       class="cardtitles"
