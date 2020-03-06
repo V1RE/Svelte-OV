@@ -3,7 +3,7 @@ import { writable, derived, readable, get } from "svelte/store";
 const baseUrl = "https://api.navitia.io/v1/journeys?";
 const urlParams = new URLSearchParams(window.location.search);
 let initFrom = { lon: "4.9524123", lat: "52.0444895" };
-let initTo = { lon: "4.9524123", lat: "52.1044895" };
+let initTo = { lon: "4.9524123", lat: "52.174895" };
 
 if (localStorage.getItem("from")) {
   try {
@@ -37,11 +37,21 @@ if (urlParams.get("to")) {
 
 export const from = writable(initFrom);
 
-from.subscribe(val => localStorage.setItem("from", JSON.stringify(val)));
+from.subscribe(val => {
+  localStorage.setItem("from", JSON.stringify(val));
+  let newUrl = new URL(window.location.href);
+  newUrl.searchParams.set("from", val.lon + ";" + val.lat);
+  window.history.pushState("", "", newUrl);
+});
 
 export const to = writable(initTo);
 
-to.subscribe(val => localStorage.setItem("to", JSON.stringify(val)));
+to.subscribe(val => {
+  localStorage.setItem("to", JSON.stringify(val));
+  let newUrl = new URL(window.location.href);
+  newUrl.searchParams.set("to", val.lon + ";" + val.lat);
+  window.history.pushState("", "", newUrl);
+});
 
 export const query = derived([from, to], ([$from, $to]) => {
   return `from=${$from.lon};${$from.lat}&to=${$to.lon};${$to.lat}`;

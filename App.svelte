@@ -3,6 +3,7 @@
   import Alerts from "./Alerts.svelte";
   import Journeys from "./Journeys.svelte";
   import { getJourneys } from "./functions.js";
+  import { from } from "./stores.js";
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/service-worker.js");
@@ -26,6 +27,13 @@
 
 <main>
   <div class="container">
+    <div
+      class="btn"
+      on:click={e => {
+        from.set({ lon: '4.6615428', lat: '52.1277023' });
+      }}>
+      aaaa
+    </div>
     <Alerts />
     <Journeys />
   </div>

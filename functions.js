@@ -24,6 +24,7 @@ export async function getJourneys(
 
     if (id == curId) {
       if (res.ok) {
+        console.log(currentJourney);
         let nextUrl = currentJourney.links[0].href;
 
         if (prev) {
