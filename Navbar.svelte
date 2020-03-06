@@ -19,7 +19,7 @@
 <nav class="navbar navbar-light bg-light">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <img src="/logo.svg" width="45" height="45" alt="" />
+      <img src="/logo.svg" width="45" height="45" alt="Logo" />
     </a>
     <div class="btn-group">
       <div
