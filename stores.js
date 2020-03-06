@@ -1,24 +1,45 @@
 import { writable, derived, readable, get } from "svelte/store";
 
 const baseUrl = "https://api.navitia.io/v1/journeys?";
+const urlParams = new URLSearchParams(window.location.search);
+let initFrom = { lon: "4.9524123", lat: "52.0444895" };
+let initTo = { lon: "4.9524123", lat: "52.1044895" };
 
-export const from = writable(
-  JSON.parse(localStorage.getItem("from")) || {
-    lon: "4.6615428",
-    lat: "52.1177023",
-    name: "Alphen aan den Rijn"
-  }
-);
+if (localStorage.getItem("from")) {
+  try {
+    initFrom = JSON.parse(localStorage.getItem("from"));
+  } catch (error) {}
+}
+
+if (localStorage.getItem("to")) {
+  try {
+    initTo = JSON.parse(localStorage.getItem("to"));
+  } catch (error) {}
+}
+
+if (urlParams.get("from")) {
+  try {
+    initFrom = {
+      lat: urlParams.get("from").split(";")[0],
+      lon: urlParams.get("from").split(";")[1]
+    };
+  } catch (error) {}
+}
+
+if (urlParams.get("to")) {
+  try {
+    initTo = {
+      lat: urlParams.get("to").split(";")[0],
+      lon: urlParams.get("to").split(";")[1]
+    };
+  } catch (error) {}
+}
+
+export const from = writable(initFrom);
 
 from.subscribe(val => localStorage.setItem("from", JSON.stringify(val)));
 
-export const to = writable(
-  JSON.parse(localStorage.getItem("to")) || {
-    lon: "4.9524123",
-    lat: "52.0444895",
-    name: "Montfoort"
-  }
-);
+export const to = writable(initTo);
 
 to.subscribe(val => localStorage.setItem("to", JSON.stringify(val)));
 
