@@ -5,10 +5,16 @@
     mdiArrowLeftCircleOutline
   } from "@mdi/js";
   import Mdicon from "mdi-svelte";
-  import { journeys } from "./stores.js";
+  import { journeys, online } from "./stores.js";
 
   export let getJourneys;
 </script>
+
+<style>
+  .disabled {
+    pointer-events: none;
+  }
+</style>
 
 <nav class="navbar navbar-light bg-light">
   <div class="container">
@@ -18,6 +24,7 @@
     <div class="btn-group">
       <div
         class="btn btn-primary"
+        class:disabled={!$online}
         on:click={e => {
           getJourneys($journeys[0].links[1].href, 0, true);
         }}>
@@ -32,6 +39,7 @@
       </div>
       <div
         class="btn btn-primary"
+        class:disabled={!$online}
         on:click={e => {
           getJourneys($journeys[$journeys.length - 1].links[0].href, 0);
         }}>
