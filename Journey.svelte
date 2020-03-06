@@ -14,7 +14,7 @@
   let open = false;
   let cities = [];
 
-  console.log(journey);
+  // console.log(journey);
 
   journey.journeys[0].sections.forEach(section => {
     let cityName;
@@ -30,8 +30,6 @@
       cities = [...cities, cityName];
     }
   });
-
-  console.log(cities);
 </script>
 
 <style>

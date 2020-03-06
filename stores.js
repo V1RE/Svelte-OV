@@ -27,6 +27,7 @@ export const query = derived([from, to], ([$from, $to]) => {
 });
 
 export const url = derived(query, $query => {
+  console.log(encodeURI(baseUrl + $query));
   return encodeURI(baseUrl + $query);
 });
 
@@ -49,7 +50,6 @@ export const online = readable(navigator.onLine, function start(set) {
 });
 
 journeys.subscribe(val => {
-  console.log("updated journeys");
   if (get(online)) {
     localStorage.setItem("journeys", JSON.stringify(val));
   }
