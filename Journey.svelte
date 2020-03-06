@@ -34,6 +34,10 @@
     right: 0;
     top: 0;
   }
+
+  .card {
+    padding: 0;
+  }
 </style>
 
 <div class="card col-12 mb-3" class:open in:fly={{ x: -50, duration: 300 }}>

@@ -20,6 +20,10 @@
     font-family: "Montserrat", sans-serif;
     padding: 1rem;
   }
+
+  :global(.container) {
+    padding: 0;
+  }
 </style>
 
 <Navbar {getJourneys} />
