@@ -37,21 +37,11 @@ if (urlParams.get("to")) {
 
 export const from = writable(initFrom);
 
-from.subscribe(val => {
-  localStorage.setItem("from", JSON.stringify(val));
-  let newUrl = new URL(window.location.href);
-  newUrl.searchParams.set("from", val.lon + ";" + val.lat);
-  window.history.pushState("", "", newUrl);
-});
+from.subscribe(val => localStorage.setItem("from", JSON.stringify(val)));
 
 export const to = writable(initTo);
 
-to.subscribe(val => {
-  localStorage.setItem("to", JSON.stringify(val));
-  let newUrl = new URL(window.location.href);
-  newUrl.searchParams.set("to", val.lon + ";" + val.lat);
-  window.history.pushState("", "", newUrl);
-});
+to.subscribe(val => localStorage.setItem("to", JSON.stringify(val)));
 
 export const query = derived([from, to], ([$from, $to]) => {
   return `from=${$from.lon};${$from.lat}&to=${$to.lon};${$to.lat}`;

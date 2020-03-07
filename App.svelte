@@ -2,12 +2,18 @@
   import Navbar from "./Navbar.svelte";
   import Alerts from "./Alerts.svelte";
   import Journeys from "./Journeys.svelte";
+  import Settings from "./Settings.svelte";
   import { getJourneys } from "./functions.js";
   import { from } from "./stores.js";
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/service-worker.js");
   }
+
+  from.subscribe(e => {
+    console.log(e);
+    getJourneys();
+  });
 
   getJourneys();
 </script>
@@ -23,7 +29,7 @@
   }
 </style>
 
-<Navbar {getJourneys} />
+<Navbar />
 
 <main>
   <div class="container">
@@ -34,6 +40,7 @@
       }}>
       aaaa
     </div>
+    <Settings />
     <Alerts />
     <Journeys />
   </div>

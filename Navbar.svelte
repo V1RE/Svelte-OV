@@ -6,8 +6,7 @@
   } from "@mdi/js";
   import Mdicon from "mdi-svelte";
   import { journeys, online } from "./stores.js";
-
-  export let getJourneys;
+  import { getJourneys } from "./functions.js";
 </script>
 
 <style>
