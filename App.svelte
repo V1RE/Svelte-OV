@@ -4,15 +4,22 @@
   import Journeys from "./Journeys.svelte";
   import Settings from "./Settings.svelte";
   import { getJourneys } from "./functions.js";
-  import { from } from "./stores.js";
+  import { from, to } from "./stores.js";
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/service-worker.js");
   }
 
   from.subscribe(e => {
-    console.log(e);
-    getJourneys();
+    if (e) {
+      getJourneys();
+    }
+  });
+
+  to.subscribe(e => {
+    if (e) {
+      getJourneys();
+    }
   });
 
   getJourneys();
@@ -33,13 +40,6 @@
 
 <main>
   <div class="container">
-    <div
-      class="btn"
-      on:click={e => {
-        from.set({ lon: '4.6615428', lat: '52.1277023' });
-      }}>
-      aaaa
-    </div>
     <Settings />
     <Alerts />
     <Journeys />

@@ -2,8 +2,8 @@ import { writable, derived, readable, get } from "svelte/store";
 
 const baseUrl = "https://api.navitia.io/v1/journeys?";
 const urlParams = new URLSearchParams(window.location.search);
-let initFrom = { lon: "4.9524123", lat: "52.0444895" };
-let initTo = { lon: "4.9524123", lat: "52.174895" };
+let initFrom = {};
+let initTo = {};
 
 if (localStorage.getItem("from")) {
   try {
