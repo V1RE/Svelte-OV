@@ -51,6 +51,27 @@
     }
   }
 
+  function setLocation(result) {
+    if (fromFirst) {
+      from.set({
+        lat: result.center[1],
+        lon: result.center[0],
+        name: result.place_name
+      });
+      skip = true;
+      fromQuery = result.place_name;
+    } else {
+      to.set({
+        lat: result.center[1],
+        lon: result.center[0],
+        name: result.place_name
+      });
+      skip = true;
+      toQuery = result.place_name;
+    }
+    results = {};
+  }
+
   $: fromQuery && geocoding(fromQuery) && (fromFirst = true);
   $: toQuery && geocoding(toQuery) && (fromFirst = false);
 
@@ -66,7 +87,20 @@
   }
 </style>
 
-<div class="input-group mb-3">
+<form
+  class="input-group mb-3"
+  on:submit|preventDefault={e => {
+    if (Object.keys(results).length) {
+      from.set({
+        lat: results.features[0].center[1],
+        lon: results.features[0].center[0],
+        name: results.features[0].place_name
+      });
+      skip = true;
+      fromQuery = results.features[0].place_name;
+      results = {};
+    }
+  }}>
   <input
     type="text"
     class="form-control"
@@ -86,9 +120,22 @@
       </span>
     {/if}
   </div>
-</div>
+</form>
 
-<div class="input-group mb-3">
+<form
+  class="input-group mb-3"
+  on:submit|preventDefault={e => {
+    if (Object.keys(results).length) {
+      to.set({
+        lat: results.features[0].center[1],
+        lon: results.features[0].center[0],
+        name: results.features[0].place_name
+      });
+      skip = true;
+      toQuery = results.features[0].place_name;
+      results = {};
+    }
+  }}>
   <input
     type="text"
     class="form-control"
@@ -108,32 +155,21 @@
       </span>
     {/if}
   </div>
-</div>
+</form>
 
 {#if Object.keys(results).length}
   <div class="list-group mb-3">
     {#each results.features as result}
       <span
         class="list-group-item list-group-item-action"
-        on:click={e => {
-          if (fromFirst) {
-            from.set({
-              lat: result.center[1],
-              lon: result.center[0],
-              name: result.text
-            });
-            skip = true;
-            fromQuery = result.text;
-          } else {
-            to.set({
-              lat: result.center[1],
-              lon: result.center[0],
-              name: result.text
-            });
-            skip = true;
-            toQuery = result.text;
+        tabindex="0"
+        on:keyup={e => {
+          if (e.key === 'Enter') {
+            setLocation(result);
           }
-          results = {};
+        }}
+        on:click={e => {
+          setLocation(result);
         }}>
         {result.place_name}
       </span>
