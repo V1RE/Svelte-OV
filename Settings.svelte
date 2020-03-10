@@ -6,40 +6,58 @@
 
   let geo = true;
   let results = {};
-  let fromQuery = "";
-  let toQuery = "";
-  let skip = false;
+  let fromQuery = $from.name;
+  let toQuery = $to.name;
+  let skip = true;
   let fromFirst = true;
+  let resp;
+  let runs = 0;
 
   function setGeo(target) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(val => {
         target.set({
           lat: val.coords.latitude,
-          lon: val.coords.longitude
+          lon: val.coords.longitude,
+          name: "Current location"
         });
       });
+      skip = true;
+      if (target === from) {
+        fromQuery = "Current location";
+      } else {
+        toQuery = "Current location";
+      }
     } else {
       geo = false;
     }
   }
 
   async function geocoding(query) {
-    if (!skip) {
-      const res = await fetch(
-        "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
-          query +
-          ".json?country=nl&access_token=pk.eyJ1IjoidjFyZSIsImEiOiJjazdoa2ozNXIwYWN6M2ZwOHpxNzVzODJnIn0.Vqg4dw-ByJC0JFGUOm8GXw"
-      );
-      results = await res.json();
-      console.log(results);
+    if (runs > 1) {
+      if (!skip) {
+        resp = await fetch(
+          "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
+            query +
+            ".json?country=nl&access_token=pk.eyJ1IjoidjFyZSIsImEiOiJjazdoa2ozNXIwYWN6M2ZwOHpxNzVzODJnIn0.Vqg4dw-ByJC0JFGUOm8GXw"
+        );
+        results = await resp.json();
+        console.log(results);
+      } else {
+        skip = false;
+      }
     } else {
-      skip = false;
+      runs++;
     }
   }
 
   $: fromQuery && geocoding(fromQuery) && (fromFirst = true);
   $: toQuery && geocoding(toQuery) && (fromFirst = false);
+
+  onMount(() => {
+    results = {};
+    skip = false;
+  });
 </script>
 
 <style>
@@ -99,11 +117,19 @@
         class="list-group-item list-group-item-action"
         on:click={e => {
           if (fromFirst) {
-            from.set({ lat: result.center[1], lon: result.center[0] });
+            from.set({
+              lat: result.center[1],
+              lon: result.center[0],
+              name: result.text
+            });
             skip = true;
             fromQuery = result.text;
           } else {
-            to.set({ lat: result.center[1], lon: result.center[0] });
+            to.set({
+              lat: result.center[1],
+              lon: result.center[0],
+              name: result.text
+            });
             skip = true;
             toQuery = result.text;
           }
