@@ -1,4 +1,5 @@
 import { writable, derived, readable, get } from "svelte/store";
+import moment from "moment";
 
 const baseUrl = "https://api.navitia.io/v1/journeys?";
 const urlParams = new URLSearchParams(window.location.search);
@@ -42,6 +43,8 @@ from.subscribe(val => localStorage.setItem("from", JSON.stringify(val)));
 export const to = writable(initTo);
 
 to.subscribe(val => localStorage.setItem("to", JSON.stringify(val)));
+
+export const dateTime = writable(moment().toISOString());
 
 export const query = derived([from, to], ([$from, $to]) => {
   return `from=${$from.lon};${$from.lat}&to=${$to.lon};${$to.lat}`;
