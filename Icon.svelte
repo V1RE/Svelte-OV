@@ -6,7 +6,9 @@
     mdiBus,
     mdiTransitTransfer,
     mdiClockOutline,
-    mdiTrain
+    mdiTrain,
+    mdiTram,
+    mdiSubway
   } from "@mdi/js";
 
   export let type;
@@ -27,6 +29,12 @@
       break;
     case "train":
       path = mdiTrain;
+      break;
+    case "tramway":
+      path = mdiTram;
+      break;
+    case "metro":
+      path = mdiSubway;
       break;
   }
 </script>
