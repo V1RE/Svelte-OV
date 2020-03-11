@@ -54,6 +54,40 @@
     }
   }
 
+  async function lookup() {
+    if (!fromQuery) {
+      const resp = await fetch(
+        "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
+          $from.lon +
+          "," +
+          $from.lat +
+          ".json?country=nl&access_token=pk.eyJ1IjoidjFyZSIsImEiOiJjazdoa2ozNXIwYWN6M2ZwOHpxNzVzODJnIn0.Vqg4dw-ByJC0JFGUOm8GXw"
+      );
+      const results = await resp.json();
+      from.update(e => {
+        e.name = results.features[0].place_name;
+        fromQuery = e.name;
+        return e;
+      });
+    }
+
+    if (!toQuery) {
+      const resp = await fetch(
+        "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
+          $to.lon +
+          "," +
+          $to.lat +
+          ".json?country=nl&access_token=pk.eyJ1IjoidjFyZSIsImEiOiJjazdoa2ozNXIwYWN6M2ZwOHpxNzVzODJnIn0.Vqg4dw-ByJC0JFGUOm8GXw"
+      );
+      const results = await resp.json();
+      to.update(e => {
+        e.name = results.features[0].place_name;
+        toQuery = e.name;
+        return e;
+      });
+    }
+  }
+
   function setLocation(result) {
     if (fromFirst) {
       from.set({
@@ -89,6 +123,7 @@
   onMount(() => {
     results = {};
     skip = false;
+    lookup();
   });
 </script>
 
