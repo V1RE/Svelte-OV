@@ -1,4 +1,12 @@
-import { url, journeys, online, from, to } from "./stores.js";
+import {
+  url,
+  journeys,
+  online,
+  from,
+  to,
+  dateTime,
+  dateTimeRepresents
+} from "./stores.js";
 import { get } from "svelte/store";
 
 let curId;
@@ -46,4 +54,30 @@ export async function getJourneys(
   } else {
     journeys.set(JSON.parse(localStorage.getItem("journeys")) || []);
   }
+}
+
+export function subscribe() {
+  from.subscribe(e => {
+    if (e) {
+      getJourneys();
+    }
+  });
+
+  to.subscribe(e => {
+    if (e) {
+      getJourneys();
+    }
+  });
+
+  dateTime.subscribe(e => {
+    if (e) {
+      getJourneys();
+    }
+  });
+
+  dateTimeRepresents.subscribe(e => {
+    if (e) {
+      getJourneys();
+    }
+  });
 }

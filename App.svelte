@@ -3,37 +3,13 @@
   import Alerts from "./Alerts.svelte";
   import Journeys from "./Journeys.svelte";
   import Settings from "./Settings.svelte";
-  import { getJourneys } from "./functions.js";
-  import { from, to, dateTime, dateTimeRepresents } from "./stores.js";
+  import { getJourneys, subscribe } from "./functions.js";
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/service-worker.js");
   }
 
-  from.subscribe(e => {
-    if (e) {
-      getJourneys();
-    }
-  });
-
-  to.subscribe(e => {
-    if (e) {
-      getJourneys();
-    }
-  });
-
-  dateTime.subscribe(e => {
-    if (e) {
-      getJourneys();
-    }
-  });
-
-  dateTimeRepresents.subscribe(e => {
-    if (e) {
-      getJourneys();
-    }
-  });
-
+  subscribe();
   getJourneys();
 </script>
 
