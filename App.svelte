@@ -3,6 +3,7 @@
   import Alerts from "./Alerts.svelte";
   import Journeys from "./Journeys.svelte";
   import Settings from "./Settings.svelte";
+  import Toast from "./Toast.svelte";
   import { getJourneys, subscribe } from "./functions.js";
 
   subscribe();
@@ -27,5 +28,6 @@
     <Settings />
     <Alerts />
     <Journeys />
+    <Toast />
   </div>
 </main>

@@ -1,5 +1,6 @@
 <script>
   import Section from "./Section.svelte";
+  import Buttons from "./Buttons.svelte";
   import moment from "moment";
   import Mdicon from "mdi-svelte";
   import { fly } from "svelte/transition";
@@ -108,5 +109,8 @@
           length={journey.journeys[0].sections.length} />
       {/each}
     </div>
+    {#if open}
+      <Buttons {journey} />
+    {/if}
   </div>
 </div>

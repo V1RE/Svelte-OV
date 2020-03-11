@@ -5,7 +5,8 @@ import {
   from,
   to,
   dateTime,
-  dateTimeRepresents
+  dateTimeRepresents,
+  toastMessage
 } from "./stores.js";
 import { get } from "svelte/store";
 
@@ -82,6 +83,14 @@ export function subscribe() {
   dateTimeRepresents.subscribe(e => {
     if (e) {
       getJourneys();
+    }
+  });
+
+  toastMessage.subscribe(e => {
+    if (e) {
+      setTimeout(() => {
+        toastMessage.set("");
+      }, 2500);
     }
   });
 }

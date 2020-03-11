@@ -169,6 +169,9 @@
     placeholder="From"
     aria-label="From"
     aria-describedby="basic-addon1"
+    on:focus={e => {
+      e.target.select();
+    }}
     bind:value={fromQuery} />
   <div class="input-group-append">
     {#if geo}
@@ -204,6 +207,9 @@
     placeholder="To"
     aria-label="To"
     aria-describedby="basic-addon1"
+    on:focus={e => {
+      e.target.select();
+    }}
     bind:value={toQuery} />
   <div class="input-group-append">
     {#if geo}

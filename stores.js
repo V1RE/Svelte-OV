@@ -1,7 +1,7 @@
 import { writable, derived, readable, get } from "svelte/store";
 import moment from "moment";
 
-const baseUrl = "https://api.navitia.io/v1/journeys?";
+const baseUrl = "https://api.navitia.io/v1/journeys";
 const urlParams = new URLSearchParams(window.location.search);
 let initFrom = {};
 let initTo = {};
@@ -60,10 +60,17 @@ export const dateTime = writable(initDateTime);
 
 export const dateTimeRepresents = writable(initDateTimeRepresents);
 
+export const shareQuery = derived(
+  [from, to, dateTimeRepresents],
+  ([$from, $to, $dateTimeRepresents]) => {
+    return `?from=${$from.lon};${$from.lat}&to=${$to.lon};${$to.lat}&datetime_represents=${$dateTimeRepresents}`;
+  }
+);
+
 export const query = derived(
-  [from, to, dateTime, dateTimeRepresents],
-  ([$from, $to, $dateTime, $dateTimeRepresents]) => {
-    return `from=${$from.lon};${$from.lat}&to=${$to.lon};${$to.lat}&datetime=${$dateTime}&datetime_represents=${$dateTimeRepresents}`;
+  [shareQuery, dateTime],
+  ([$shareQuery, $dateTime]) => {
+    return $shareQuery + "&datetime=" + $dateTime;
   }
 );
 
@@ -88,6 +95,8 @@ export const online = readable(navigator.onLine, function start(set) {
     window.removeEventListener("offline", handleNetworkChange);
   };
 });
+
+export const toastMessage = writable("");
 
 journeys.subscribe(val => {
   if (get(online)) {
