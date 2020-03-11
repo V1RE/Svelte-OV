@@ -1,7 +1,7 @@
 <script>
   import Mdicon from "mdi-svelte";
   import { mdiCrosshairsGps } from "@mdi/js";
-  import { from, to, dateTime } from "./stores.js";
+  import { from, to, dateTime, dateTimeRepresents } from "./stores.js";
   import { onMount } from "svelte";
   import moment from "moment";
 
@@ -14,6 +14,7 @@
   let resp;
   let runs = 0;
   let time;
+  let departure = $dateTimeRepresents;
 
   function setGeo(target) {
     if (navigator.geolocation) {
@@ -78,6 +79,7 @@
   $: toQuery && geocoding(toQuery) && (fromFirst = false);
   $: time &&
     dateTime.set(moment(moment().format("YYYY MM DD ") + time).toISOString());
+  $: departure && dateTimeRepresents.set(departure);
 
   onMount(() => {
     results = {};
@@ -100,8 +102,9 @@
     <input
       type="radio"
       id="customRadioInline1"
-      checked
       name="customRadioInline1"
+      bind:group={departure}
+      value="departure"
       class="custom-control-input" />
     <label class="custom-control-label" for="customRadioInline1">
       Depart at:
@@ -112,6 +115,8 @@
       type="radio"
       id="customRadioInline2"
       name="customRadioInline1"
+      bind:group={departure}
+      value="arrival"
       class="custom-control-input" />
     <label class="custom-control-label" for="customRadioInline2">
       Arrive by:

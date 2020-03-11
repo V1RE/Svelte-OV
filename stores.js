@@ -46,9 +46,14 @@ to.subscribe(val => localStorage.setItem("to", JSON.stringify(val)));
 
 export const dateTime = writable(moment().toISOString());
 
-export const query = derived([from, to], ([$from, $to]) => {
-  return `from=${$from.lon};${$from.lat}&to=${$to.lon};${$to.lat}`;
-});
+export const dateTimeRepresents = writable("departure");
+
+export const query = derived(
+  [from, to, dateTime, dateTimeRepresents],
+  ([$from, $to, $dateTime, $dateTimeRepresents]) => {
+    return `from=${$from.lon};${$from.lat}&to=${$to.lon};${$to.lat}&datetime=${$dateTime}&datetime_represents=${$dateTimeRepresents}`;
+  }
+);
 
 export const url = derived(query, $query => {
   console.log(encodeURI(baseUrl + $query));
