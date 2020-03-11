@@ -13,7 +13,7 @@
   let fromFirst = true;
   let resp;
   let runs = 0;
-  let time;
+  let time = moment().format("HH:mm");
   let departure = $dateTimeRepresents;
 
   function setGeo(target) {
