@@ -62,6 +62,10 @@ export function subscribe() {
     navigator.serviceWorker.register("/service-worker.js");
   }
 
+  if (window.location.pathname == "/") {
+    history.replaceState(null, "", "/");
+  }
+
   from.subscribe(e => {
     if (e) {
       getJourneys();

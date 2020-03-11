@@ -1,7 +1,13 @@
 <script>
   import Mdicon from "mdi-svelte";
   import moment from "moment";
-  import { shareQuery, dateTimeRepresents, toastMessage } from "./stores";
+  import {
+    shareQuery,
+    dateTimeRepresents,
+    toastMessage,
+    from,
+    to
+  } from "./stores";
   import { mdiShareVariant } from "@mdi/js";
 
   export let journey;
@@ -19,7 +25,7 @@
     if (navigator.share) {
       navigator.share({
         title: "Share test!",
-        text: "This is a test",
+        text: $from.name + " ➡️ " + $to.name + ":\n",
         url: shareUrl
       });
     } else if (navigator.clipboard) {

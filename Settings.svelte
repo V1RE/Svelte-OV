@@ -21,16 +21,11 @@
       navigator.geolocation.getCurrentPosition(val => {
         target.set({
           lat: val.coords.latitude,
-          lon: val.coords.longitude,
-          name: "Current location"
+          lon: val.coords.longitude
         });
       });
       skip = true;
-      if (target === from) {
-        fromQuery = "Current location";
-      } else {
-        toQuery = "Current location";
-      }
+      lookup();
     } else {
       geo = false;
     }
@@ -41,11 +36,15 @@
       if (!skip) {
         resp = await fetch(
           "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
-            query +
+            encodeURI(query) +
             ".json?country=nl&access_token=pk.eyJ1IjoidjFyZSIsImEiOiJjazdoa2ozNXIwYWN6M2ZwOHpxNzVzODJnIn0.Vqg4dw-ByJC0JFGUOm8GXw"
         );
-        results = await resp.json();
-        console.log(results);
+        if (await resp.ok) {
+          results = await resp.json();
+        } else {
+          results = {};
+        }
+        console.log(resp);
       } else {
         skip = false;
       }
@@ -55,7 +54,7 @@
   }
 
   async function lookup() {
-    if (!fromQuery) {
+    if (!$from.name) {
       const resp = await fetch(
         "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
           $from.lon +
@@ -63,12 +62,14 @@
           $from.lat +
           ".json?country=nl&access_token=pk.eyJ1IjoidjFyZSIsImEiOiJjazdoa2ozNXIwYWN6M2ZwOHpxNzVzODJnIn0.Vqg4dw-ByJC0JFGUOm8GXw"
       );
-      const results = await resp.json();
-      from.update(e => {
-        e.name = results.features[0].place_name;
-        fromQuery = e.name;
-        return e;
-      });
+      if (await resp.ok) {
+        let places = await resp.json();
+        from.update(e => {
+          e.name = places.features[0].place_name;
+          fromQuery = e.name;
+          return e;
+        });
+      }
     }
 
     if (!toQuery) {
@@ -79,12 +80,14 @@
           $to.lat +
           ".json?country=nl&access_token=pk.eyJ1IjoidjFyZSIsImEiOiJjazdoa2ozNXIwYWN6M2ZwOHpxNzVzODJnIn0.Vqg4dw-ByJC0JFGUOm8GXw"
       );
-      const results = await resp.json();
-      to.update(e => {
-        e.name = results.features[0].place_name;
-        toQuery = e.name;
-        return e;
-      });
+      if (await resp.ok) {
+        let places = await resp.json();
+        to.update(e => {
+          e.name = places.features[0].place_name;
+          toQuery = e.name;
+          return e;
+        });
+      }
     }
   }
 
