@@ -1,6 +1,6 @@
 <script>
   import Mdicon from "mdi-svelte";
-  import { mdiCrosshairsGps } from "@mdi/js";
+  import { mdiCrosshairsGps, mdiHistory } from "@mdi/js";
   import { from, to, dateTime, dateTimeRepresents } from "./stores.js";
   import { onMount } from "svelte";
   import moment from "moment";
@@ -133,8 +133,13 @@
     aria-describedby="basic-addon1"
     bind:value={time} />
   <div class="input-group-append">
-    <span class="input-group-text" id="basic-addon1">
-      <Mdicon path={mdiCrosshairsGps} />
+    <span
+      class="input-group-text"
+      id="basic-addon1"
+      on:click={e => {
+        time = moment().format('HH:mm');
+      }}>
+      <Mdicon path={mdiHistory} />
     </span>
   </div>
 </form>
