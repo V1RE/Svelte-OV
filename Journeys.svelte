@@ -2,7 +2,11 @@
   import Journey from "./Journey.svelte";
   import { from, to, journeys, online } from "./stores.js";
   import Mdicon from "mdi-svelte";
-  import { mdiChevronRight, mdiMenuDown } from "@mdi/js";
+  import {
+    mdiChevronRight,
+    mdiMenuDown,
+    mdiWifiStrengthOffOutline
+  } from "@mdi/js";
 </script>
 
 <style>
@@ -47,5 +51,7 @@
         <div class="sections loading" />
       </div>
     </div>
+  {:else}
+    <Mdicon path={mdiWifiStrengthOffOutline} />
   {/if}
 {/if}

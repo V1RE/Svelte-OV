@@ -12,7 +12,7 @@
       getJourneys();
       setTimeout(() => {
         showOnline = false;
-      }, 2000);
+      }, 5000);
     }
 
     showOffline = !val;
@@ -41,5 +41,16 @@
 {/if}
 
 {#if showOnline}
-  <Alert color="success">Internet connection restored</Alert>
+  <Alert color="success">
+    Internet connection restored
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      on:click={e => {
+        showOnline = false;
+      }}>
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </Alert>
 {/if}
