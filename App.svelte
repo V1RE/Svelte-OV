@@ -5,10 +5,6 @@
   import Settings from "./Settings.svelte";
   import { getJourneys, subscribe } from "./functions.js";
 
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/service-worker.js");
-  }
-
   subscribe();
   getJourneys();
 </script>

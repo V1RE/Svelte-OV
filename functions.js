@@ -57,6 +57,10 @@ export async function getJourneys(
 }
 
 export function subscribe() {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js");
+  }
+
   from.subscribe(e => {
     if (e) {
       getJourneys();
