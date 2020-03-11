@@ -13,7 +13,7 @@
   let fromFirst = true;
   let resp;
   let runs = 0;
-  let time = moment().format("HH:mm");
+  let time = moment($dateTime).format("HH:mm");
   let departure = $dateTimeRepresents;
 
   function setGeo(target) {
@@ -78,7 +78,12 @@
   $: fromQuery && geocoding(fromQuery) && (fromFirst = true);
   $: toQuery && geocoding(toQuery) && (fromFirst = false);
   $: time &&
-    dateTime.set(moment(moment().format("YYYY MM DD ") + time).toISOString());
+    dateTime.set(
+      moment(
+        moment().format("YYYY MM DD ") + time,
+        "YYYY MM DD HH:mm"
+      ).toISOString()
+    );
   $: departure && dateTimeRepresents.set(departure);
 
   onMount(() => {

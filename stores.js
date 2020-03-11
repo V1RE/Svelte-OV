@@ -5,6 +5,8 @@ const baseUrl = "https://api.navitia.io/v1/journeys?";
 const urlParams = new URLSearchParams(window.location.search);
 let initFrom = {};
 let initTo = {};
+let initDateTime = moment().toISOString();
+let initDateTimeRepresents = "departure";
 
 if (localStorage.getItem("from")) {
   try {
@@ -36,6 +38,16 @@ if (urlParams.get("to")) {
   } catch (error) {}
 }
 
+if (moment(urlParams.get("datetime")).toISOString()) {
+  initDateTime = moment(urlParams.get("datetime")).toISOString();
+}
+
+if (urlParams.get("datetime_represents")) {
+  try {
+    initDateTimeRepresents = urlParams.get("datetime_represents");
+  } catch (error) {}
+}
+
 export const from = writable(initFrom);
 
 from.subscribe(val => localStorage.setItem("from", JSON.stringify(val)));
@@ -44,9 +56,9 @@ export const to = writable(initTo);
 
 to.subscribe(val => localStorage.setItem("to", JSON.stringify(val)));
 
-export const dateTime = writable(moment().toISOString());
+export const dateTime = writable(initDateTime);
 
-export const dateTimeRepresents = writable("departure");
+export const dateTimeRepresents = writable(initDateTimeRepresents);
 
 export const query = derived(
   [from, to, dateTime, dateTimeRepresents],
@@ -56,7 +68,6 @@ export const query = derived(
 );
 
 export const url = derived(query, $query => {
-  console.log(encodeURI(baseUrl + $query));
   return encodeURI(baseUrl + $query);
 });
 
