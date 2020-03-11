@@ -101,7 +101,11 @@
     </div>
     <div class="sections">
       {#each journey.journeys[0].sections as section, i}
-        <Section {section} {i} {open} />
+        <Section
+          {section}
+          {i}
+          {open}
+          length={journey.journeys[0].sections.length} />
       {/each}
     </div>
   </div>

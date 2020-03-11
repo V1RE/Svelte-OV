@@ -7,6 +7,7 @@
   export let section;
   export let i;
   export let open;
+  export let length;
   let type = "" + (section.mode || section.type);
   let baseUrl = "https://www.google.com/maps/dir/?api=1&travelmode=walking";
   let url, to, from;
@@ -69,7 +70,7 @@
       <Icon {type} />
     </div>
     <div class="content">
-      <span class="line1">
+      <span class="line1 mb-1">
         {moment(section.departure_date_time).format('HH:mm')}
         {#if from}- {from.name}{/if}
       </span>
@@ -77,11 +78,16 @@
         {#if section.duration}
           {moment.utc(section.duration * 1000).format('HH:mm')}
         {/if}
+        {#if section.display_informations}
+          - {section.display_informations.label} - {section.display_informations.direction}
+        {/if}
       </span>
-      <span class="line3">
-        {moment(section.arrival_date_time).format('HH:mm')}
-        {#if to}- {to.name}{/if}
-      </span>
+      {#if length - 1 == i}
+        <span class="line3 mt-1">
+          {moment(section.arrival_date_time).format('HH:mm')}
+          {#if to}- {to.name}{/if}
+        </span>
+      {/if}
     </div>
     {#if url}
       <div class="route">
