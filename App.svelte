@@ -4,7 +4,7 @@
   import Journeys from "./Journeys.svelte";
   import Settings from "./Settings.svelte";
   import { getJourneys } from "./functions.js";
-  import { from, to } from "./stores.js";
+  import { from, to, dateTime, dateTimeRepresents } from "./stores.js";
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/service-worker.js");
@@ -17,6 +17,18 @@
   });
 
   to.subscribe(e => {
+    if (e) {
+      getJourneys();
+    }
+  });
+
+  dateTime.subscribe(e => {
+    if (e) {
+      getJourneys();
+    }
+  });
+
+  dateTimeRepresents.subscribe(e => {
     if (e) {
       getJourneys();
     }

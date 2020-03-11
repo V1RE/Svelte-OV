@@ -1,8 +1,9 @@
 <script>
   import Mdicon from "mdi-svelte";
   import { mdiCrosshairsGps } from "@mdi/js";
-  import { from, to } from "./stores.js";
+  import { from, to, dateTime, dateTimeRepresents } from "./stores.js";
   import { onMount } from "svelte";
+  import moment from "moment";
 
   let geo = true;
   let results = {};
@@ -12,6 +13,8 @@
   let fromFirst = true;
   let resp;
   let runs = 0;
+  let time;
+  let departure = $dateTimeRepresents;
 
   function setGeo(target) {
     if (navigator.geolocation) {
@@ -74,6 +77,9 @@
 
   $: fromQuery && geocoding(fromQuery) && (fromFirst = true);
   $: toQuery && geocoding(toQuery) && (fromFirst = false);
+  $: time &&
+    dateTime.set(moment(moment().format("YYYY MM DD ") + time).toISOString());
+  $: departure && dateTimeRepresents.set(departure);
 
   onMount(() => {
     results = {};
@@ -85,7 +91,53 @@
   span {
     cursor: pointer;
   }
+
+  input {
+    text-overflow: ellipsis;
+  }
 </style>
+
+<div class="input-group mb-3">
+  <div class="custom-control custom-radio custom-control-inline">
+    <input
+      type="radio"
+      id="customRadioInline1"
+      name="customRadioInline1"
+      bind:group={departure}
+      value="departure"
+      class="custom-control-input" />
+    <label class="custom-control-label" for="customRadioInline1">
+      Depart at:
+    </label>
+  </div>
+  <div class="custom-control custom-radio custom-control-inline">
+    <input
+      type="radio"
+      id="customRadioInline2"
+      name="customRadioInline1"
+      bind:group={departure}
+      value="arrival"
+      class="custom-control-input" />
+    <label class="custom-control-label" for="customRadioInline2">
+      Arrive by:
+    </label>
+  </div>
+</div>
+
+<form class="input-group mb-3">
+  <input
+    type="time"
+    class="form-control"
+    placeholder="From"
+    aria-label="From"
+    aria-describedby="basic-addon1"
+    bind:value={time} />
+  <div class="input-group-append">
+    <span class="input-group-text" id="basic-addon1">
+      <Mdicon path={mdiCrosshairsGps} />
+    </span>
+  </div>
+</form>
 
 <form
   class="input-group mb-3"
