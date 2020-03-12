@@ -67,31 +67,33 @@ export function subscribe() {
   }
 
   from.subscribe(e => {
-    if (e) {
+    if (Object.keys(e).length) {
+      localStorage.setItem("from", JSON.stringify(e));
       getJourneys();
     }
   });
 
   to.subscribe(e => {
-    if (e) {
+    if (Object.keys(e).length) {
+      localStorage.setItem("to", JSON.stringify(e));
       getJourneys();
     }
   });
 
   dateTime.subscribe(e => {
-    if (e) {
+    if (Object.keys(e).length) {
       getJourneys();
     }
   });
 
   dateTimeRepresents.subscribe(e => {
-    if (e) {
+    if (Object.keys(e).length) {
       getJourneys();
     }
   });
 
   toastMessage.subscribe(e => {
-    if (e) {
+    if (Object.keys(e).length) {
       setTimeout(() => {
         toastMessage.set("");
       }, 2500);

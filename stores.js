@@ -50,11 +50,7 @@ if (urlParams.get("datetime_represents")) {
 
 export const from = writable(initFrom);
 
-from.subscribe(val => localStorage.setItem("from", JSON.stringify(val)));
-
 export const to = writable(initTo);
-
-to.subscribe(val => localStorage.setItem("to", JSON.stringify(val)));
 
 export const dateTime = writable(initDateTime);
 
