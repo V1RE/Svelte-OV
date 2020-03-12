@@ -291,7 +291,7 @@
   </div>
 {:else if (!fromQuery && fromFirst) || (!toQuery && !fromFirst)}
   <div class="list-group mb-3">
-    {#each JSON.parse(localStorage.getItem('history')).slice(0, 5) || [] as result}
+    {#each (JSON.parse(localStorage.getItem('history')) || []).slice(0, 5) as result}
       <span
         class="list-group-item list-group-item-action"
         tabindex="0"
