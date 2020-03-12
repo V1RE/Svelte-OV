@@ -15,6 +15,7 @@
   let runs = 0;
   let time = moment($dateTime).format("HH:mm");
   let departure = $dateTimeRepresents;
+  let openHistory = false;
 
   function setGeo(target) {
     if (navigator.geolocation) {
@@ -41,10 +42,12 @@
         );
         if (await resp.ok) {
           results = await resp.json();
+          if (!results.features.length) {
+            results = {};
+          }
         } else {
           results = {};
         }
-        console.log(resp);
       } else {
         skip = false;
       }
@@ -109,11 +112,12 @@
       skip = true;
       toQuery = result.place_name;
     }
+    openHistory = false;
     results = {};
   }
 
-  $: fromQuery && geocoding(fromQuery) && (fromFirst = true);
-  $: toQuery && geocoding(toQuery) && (fromFirst = false);
+  $: "test" + fromQuery && geocoding(fromQuery) && (fromFirst = true);
+  $: "test" + toQuery && geocoding(toQuery) && (fromFirst = false);
   $: time &&
     dateTime.set(
       moment(
@@ -209,6 +213,8 @@
     aria-describedby="basic-addon1"
     on:focus={e => {
       e.target.select();
+      fromFirst = true;
+      openHistory = true;
     }}
     bind:value={fromQuery} />
   <div class="input-group-append">
@@ -247,6 +253,8 @@
     aria-describedby="basic-addon1"
     on:focus={e => {
       e.target.select();
+      fromFirst = false;
+      openHistory = true;
     }}
     bind:value={toQuery} />
   <div class="input-group-append">
@@ -278,6 +286,30 @@
           setLocation(result);
         }}>
         {result.place_name}
+      </span>
+    {/each}
+  </div>
+{:else if (!fromQuery && fromFirst) || (!toQuery && !fromFirst)}
+  <div class="list-group mb-3">
+    {#each JSON.parse(localStorage.getItem('history')).slice(0, 5) || [] as result}
+      <span
+        class="list-group-item list-group-item-action"
+        tabindex="0"
+        on:keyup={e => {
+          if (e.key === 'Enter') {
+            setLocation({
+              center: [result.lon, result.lat],
+              place_name: result.name
+            });
+          }
+        }}
+        on:click={e => {
+          setLocation({
+            center: [result.lon, result.lat],
+            place_name: result.name
+          });
+        }}>
+        {result.name}
       </span>
     {/each}
   </div>

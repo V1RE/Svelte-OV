@@ -69,6 +69,7 @@ export function subscribe() {
   from.subscribe(e => {
     if (Object.keys(e).length) {
       localStorage.setItem("from", JSON.stringify(e));
+      appendHistory(e);
       getJourneys();
     }
   });
@@ -76,6 +77,7 @@ export function subscribe() {
   to.subscribe(e => {
     if (Object.keys(e).length) {
       localStorage.setItem("to", JSON.stringify(e));
+      appendHistory(e);
       getJourneys();
     }
   });
@@ -99,4 +101,17 @@ export function subscribe() {
       }, 2500);
     }
   });
+}
+
+export function appendHistory(location) {
+  if (location.name) {
+    let history = JSON.parse(localStorage.getItem("history")) || [location];
+    history = [location, ...history];
+    console.log(history);
+    history = history.filter(
+      (thing, index, self) =>
+        index === self.findIndex(t => t.name === thing.name)
+    );
+    localStorage.setItem("history", JSON.stringify(history));
+  }
 }
