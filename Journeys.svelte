@@ -42,6 +42,57 @@
   {/each}
 {:else}
   {#if $online}
+    <style>
+      body {
+        height: 100vh;
+        overflow: hidden;
+      }
+    </style>
+    <div class="card col-12 mb-3">
+      <div class="card-body">
+        <div class="cardtitles">
+          <h5 class="card-title loading">Loading...</h5>
+          <h6 class="card-subtitle mb-2 text-muted loading">Loading...</h6>
+        </div>
+        <div class="sections loading" />
+      </div>
+    </div>
+    <div class="card col-12 mb-3">
+      <div class="card-body">
+        <div class="cardtitles">
+          <h5 class="card-title loading">Loading...</h5>
+          <h6 class="card-subtitle mb-2 text-muted loading">Loading...</h6>
+        </div>
+        <div class="sections loading" />
+      </div>
+    </div>
+    <div class="card col-12 mb-3">
+      <div class="card-body">
+        <div class="cardtitles">
+          <h5 class="card-title loading">Loading...</h5>
+          <h6 class="card-subtitle mb-2 text-muted loading">Loading...</h6>
+        </div>
+        <div class="sections loading" />
+      </div>
+    </div>
+    <div class="card col-12 mb-3">
+      <div class="card-body">
+        <div class="cardtitles">
+          <h5 class="card-title loading">Loading...</h5>
+          <h6 class="card-subtitle mb-2 text-muted loading">Loading...</h6>
+        </div>
+        <div class="sections loading" />
+      </div>
+    </div>
+    <div class="card col-12 mb-3">
+      <div class="card-body">
+        <div class="cardtitles">
+          <h5 class="card-title loading">Loading...</h5>
+          <h6 class="card-subtitle mb-2 text-muted loading">Loading...</h6>
+        </div>
+        <div class="sections loading" />
+      </div>
+    </div>
     <div class="card col-12 mb-3">
       <div class="card-body">
         <div class="cardtitles">
