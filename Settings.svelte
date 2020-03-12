@@ -23,9 +23,9 @@
           lat: val.coords.latitude,
           lon: val.coords.longitude
         });
+        lookup();
       });
       skip = true;
-      lookup();
     } else {
       geo = false;
     }
