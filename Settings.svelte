@@ -72,7 +72,7 @@
       }
     }
 
-    if (!toQuery) {
+    if (!$to.name) {
       const resp = await fetch(
         "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
           $to.lon +
