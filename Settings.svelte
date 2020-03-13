@@ -271,7 +271,7 @@
   </div>
 </form>
 
-{#if Object.keys(results).length}
+{#if Object.keys(results).length && !((fromFirst && fromQuery == $from.name) || (!fromFirst && toQuery == $to.name))}
   <div class="list-group mb-3">
     {#each results.features as result}
       <span
