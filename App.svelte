@@ -4,6 +4,7 @@
   import Journeys from "./Journeys.svelte";
   import Settings from "./Settings.svelte";
   import Toast from "./Toast.svelte";
+  import Places from "./Places.svelte";
   import { getJourneys, subscribe } from "./functions.js";
 
   subscribe();
@@ -25,6 +26,7 @@
 
 <main>
   <div class="container">
+    <Places />
     <Settings />
     <Alerts />
     <Journeys />
