@@ -26,8 +26,8 @@
 
 <main>
   <div class="container">
-    <Places />
     <Settings />
+    <Places />
     <Alerts />
     <Journeys />
     <Toast />

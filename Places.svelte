@@ -1,25 +1,49 @@
 <script>
   import { onMount } from "svelte";
-  import { from } from "./stores";
-  // import * as places from "places.js";
+  import { from, to } from "./stores";
+
+  const options = {
+    appId: "plN7IJ2IUIO4",
+    apiKey: "71553105a7831c0e368cac91d7bbecb2"
+  };
 
   onMount(() => {
-    const options = {
-      appId: "plN7IJ2IUIO4",
-      apiKey: "71553105a7831c0e368cac91d7bbecb2",
-      container: document.querySelector("#address-input")
-    };
-    const fromPlaces = places(options);
+    const fromPlaces = places({
+      ...options,
+      container: document.querySelector("#fromInput")
+    });
+
+    const toPlaces = places({
+      ...options,
+      container: document.querySelector("#toInput")
+    });
 
     fromPlaces.on("change", e => {
-      console.log(e.suggestion);
       from.set({
         lat: e.suggestion.latlng.lat,
         lon: e.suggestion.latlng.lng,
-        name: e.suggestion.name
+        name: e.suggestion.value
+      });
+    });
+
+    toPlaces.on("change", e => {
+      to.set({
+        lat: e.suggestion.latlng.lat,
+        lon: e.suggestion.latlng.lng,
+        name: e.suggestion.value
       });
     });
   });
 </script>
 
-<input type="search" id="address-input" placeholder="Where are we going?" />
+<div class="mb-3">
+  <input
+    type="search"
+    id="fromInput"
+    placeholder="From"
+    value={$from.name || ''} />
+</div>
+
+<div class="mb-3">
+  <input type="search" id="toInput" placeholder="To" value={$to.name || ''} />
+</div>
